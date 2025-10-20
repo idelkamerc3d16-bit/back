@@ -1,12 +1,14 @@
-// backend/db.js (¡Usa la URL completa, más confiable!)
+// backend/db.js
 
 require('dotenv').config(); 
 const { Sequelize } = require('sequelize'); 
 
-// 💡 CLAVE: Usamos la variable única DATABASE_URL
+// CLAVE: Usamos la variable única DATABASE_URL. 
+// Render debe tener esta variable configurada en su dashboard.
 const DATABASE_URL = process.env.DATABASE_URL;
 
 if (!DATABASE_URL) {
+    // Esto solo se verá si la variable no está configurada localmente o en Render
     console.error("🔴 ERROR: La variable DATABASE_URL no está definida.");
 }
 
@@ -15,7 +17,7 @@ const sequelize = new Sequelize(DATABASE_URL, {
     dialect: 'postgres',
     logging: false, 
 
-    // Mantenemos la configuración SSL/TLS que es esencial
+    // Mantenemos la configuración SSL/TLS esencial para la conexión remota
     dialectOptions: {
         ssl: {
             require: true, 
