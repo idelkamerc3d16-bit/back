@@ -19,6 +19,9 @@ const corsOptions = {
     origin: allowedOrigins
 };
 
+// Middlewares
+app.use(cors(corsOptions)); // ⬅️ Este middleware debe estar activo
+// ...
 const PORT = process.env.PORT || 3001; 
 
 // Middlewares
