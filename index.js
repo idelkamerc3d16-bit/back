@@ -41,3 +41,17 @@ app.get('/api/users', getUsers);  
 app.listen(PORT, () => {
     console.log(`Backend escuchando en el puerto ${PORT}`);
 });
+// backend/db.js
+
+// ... resto del código (hasta sequelize.authenticate().then()...)
+
+sequelize.authenticate()
+    .then(() => console.log('✅ Conexión a la DB establecida con éxito.'))
+    .then(() => {
+        // 🚨 PASO CRÍTICO: Sincroniza el modelo con la base de datos.
+        // Esto crea la tabla 'boo' si no existe.
+        return sequelize.sync(); 
+    })
+    .catch(err => console.error('❌ No se pudo conectar a la DB. Error:', err.message));
+
+module.exports = sequelize;
