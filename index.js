@@ -1,4 +1,4 @@
-// Contenido para backend/index.js (FINAL)
+// Contenido para backend/index.js (FINAL Y AJUSTADO PARA DEPLIEGUE/CONSULTA CLARA)
 
 const express = require('express');
 const cors = require('cors'); 
@@ -25,14 +25,18 @@ const PORT = process.env.PORT || 3001;
 app.use(cors(corsOptions)); 
 app.use(express.json()); 
 
-// RUTA DE PRUEBA
-app.get('/', (req, res) => {
-    res.send('Backend vivo y Express funcionando.');
-});
+// 🚨 RUTA DE CONSULTA (GET): /consulta
+// Esta ruta es la que usarás para ver todos los datos tanto localmente como después del despliegue.
+// Reemplaza el antiguo '/api/users' GET.
+app.get('/consulta', getUsers); 
+
 
 // RUTAS API FUNCIONALES:
+// Mantienes la ruta POST para agregar datos.
 app.post('/api/users', createUser); 
-app.get('/api/users', getUsers);   
+// 🚨 Se elimina la ruta app.get('/api/users', getUsers); para usar solo /consulta
+// 🚨 Se elimina la ruta de prueba app.get('/', (req, res) => { ... });
+
 
 // 🚨 PASO CRÍTICO: CONEXIÓN A DB Y LUEGO INICIO DEL SERVIDOR
 
@@ -46,6 +50,9 @@ sequelize.authenticate()
         // SOLO iniciamos el servidor si la conexión a la DB fue exitosa
         app.listen(PORT, () => {
             console.log(`Backend escuchando en el puerto ${PORT}`);
+            // 💡 Notificación para la ruta de consulta
+            console.log(`Consulta (GET) y Despliegue en ruta: /consulta`);
+            console.log(`Creación (POST) en ruta: /api/users`);
         });
     })
     .catch(err => {
