@@ -8,11 +8,11 @@ require('dotenv').config();
 
 const app = express();
 
-// 🚨 CONFIGURACIÓN CORS CORREGIDA
+// 🚨 CONFIGURACIÓN CORS (Permite que el frontend se conecte)
 const allowedOrigins = [
-    'http://localhost:5173', // Puerto local de tu frontend (ej. Vite, React)
+    'http://localhost:5173', // Puerto de desarrollo local (Comprueba si tu frontend usa este)
     'http://localhost:3000',  // Otro puerto común de desarrollo
-    // 💡 AÑADE AQUÍ LA URL DE PRODUCCIÓN DE TU FRONTEND cuando la tengas (ej: 'https://mi-frontend-app.onrender.com')
+    // 💡 AÑADE LA URL DE PRODUCCIÓN DE TU FRONTEND AQUÍ cuando esté desplegado
 ];
 
 const corsOptions = {
