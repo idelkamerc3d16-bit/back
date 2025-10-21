@@ -1,4 +1,4 @@
-// backend/index.js (VERSIÓN FINAL Y ARREGLADA)
+// backend/index.js (VERSIÓN FINAL CON /CONSULTA PARA POST Y GET)
 
 const express = require('express');
 const cors = require('cors'); 
@@ -26,15 +26,16 @@ const PORT = process.env.PORT || 3001;
 app.use(cors(corsOptions)); 
 app.use(express.json()); 
 
-// 🚨 RUTA DE CONSULTA (GET): /consulta
-// Usada para ver todos los datos (GET) tanto localmente como después del despliegue.
+// 🚨 RUTA UNIFICADA (GET y POST): /consulta
+
+// 1. RUTA CONSULTA (GET): Para ver todos los datos.
 app.get('/consulta', getUsers); 
 
+// 2. RUTA CREACIÓN (POST): Para agregar nuevos usuarios/datos.
+app.post('/consulta', createUser); 
 
-// RUTAS API FUNCIONALES:
-// RUTA POST: Para agregar nuevos usuarios/datos.
-app.post('/api/users', createUser); 
-// 🚨 Se eliminó la ruta de prueba '/' y el GET '/api/users' para usar solo /consulta.
+
+// 🚨 Se eliminan todas las rutas redundantes como '/api/users' y '/'
 
 
 // 🚨 PASO CRÍTICO: CONEXIÓN A DB Y LUEGO INICIO DEL SERVIDOR
@@ -49,8 +50,7 @@ sequelize.authenticate()
         // SOLO iniciamos el servidor si la conexión a la DB fue exitosa
         app.listen(PORT, () => {
             console.log(`Backend escuchando en el puerto ${PORT}`);
-            console.log(`Consulta (GET) en ruta: /consulta`);
-            console.log(`Creación (POST) en ruta: /api/users`);
+            console.log(`Ruta unificada (POST/GET) en: /consulta`);
         });
     })
     .catch(err => {
